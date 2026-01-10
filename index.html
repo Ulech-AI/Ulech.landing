@@ -2,210 +2,330 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
   <title>ULECH — Conversion Assets for Fitness Coaches</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Sora:wght@600;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 
   <style>
+    /* --- DESIGN SYSTEM --- */
     :root {
-      --bg-main: #f1f3f7;
-      --bg-hero: #e3ebff;
-      --text-main: #000000;
-      --accent: #1e6bff;
+      --bg-dark: #050505;
+      --bg-card: #121212;
+      --text-main: #FFFFFF;
+      --text-muted: rgba(255, 255, 255, 0.7);
+      
+      /* Accent Colors */
+      --accent: #1e6bff; 
+      --accent-glow: rgba(30, 107, 255, 0.4);
+      
+      --font-headline: 'Sora', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-btn: 'Space Grotesk', sans-serif;
+
+      --container-width: 1100px;
+      --radius-card: 20px;
+      --radius-btn: 50px;
+      
+      /* Responsive Spacing */
+      --section-padding: 80px;
     }
 
-    /* FIX 1: Prevent horizontal scroll and improve touch response */
+    /* --- RESET & BASE --- */
     html, body { 
       margin: 0; 
       padding: 0; 
       box-sizing: border-box; 
       width: 100%;
-      overflow-x: hidden; /* Stops the 'extra part' on the right */
-      position: relative;
+      overflow-x: hidden; 
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
       -webkit-tap-highlight-color: transparent;
       scroll-behavior: smooth;
     }
 
     * { box-sizing: border-box; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at top, #ffffff 0%, var(--bg-main) 55%);
-      color: var(--text-main);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
+    h1, h2, h3 {
+      font-family: var(--font-headline);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin: 0 0 20px 0;
+      color: #fff;
     }
+
+    p { color: var(--text-muted); margin-bottom: 20px; }
 
     .container { 
         width: 90%; 
-        max-width: 1100px; 
+        max-width: var(--container-width); 
         margin: 0 auto; 
     }
 
-    /* FIX 2: Removed backdrop-filter (blur) to stop Instagram lag */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255, 255, 255, 0.98); 
-      border-bottom: 1px solid rgba(0,0,0,0.08);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-    }
-
-    .nav { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; }
-    .logo { font-weight: 800; letter-spacing: 1px; font-size: 1.1rem; }
-
-    /* Buttons */
+    /* --- BUTTONS --- */
     .btn {
       position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 16px 32px;
-      border-radius: 999px;
-      background: linear-gradient(180deg, #2a74ff 0%, #1e6bff 100%);
+      padding: 16px 36px;
+      border-radius: var(--radius-btn);
+      background: var(--accent);
       color: #fff;
+      font-family: var(--font-btn);
+      font-weight: 700;
       text-decoration: none;
-      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
       border: none;
       cursor: pointer;
       font-size: 1rem;
-      transition: transform 0.2s ease;
-      will-change: transform; /* Hardware Acceleration */
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px var(--accent-glow);
+      /* Prevent text selection on double tap */
+      user-select: none; 
     }
 
     .btn:active { transform: scale(0.96); }
 
-    /* FIX 3: Adjusted Sonar scale (1.4 was too big for mobile screens) */
-    .btn.sonar::after {
+    .btn.pulse::after {
       content: '';
       position: absolute;
-      inset: 0;
+      inset: -4px;
       border-radius: inherit;
-      animation: sonar 2.5s infinite;
-      background: rgba(30,107,255,0.4);
+      border: 1px solid var(--accent);
+      opacity: 0;
+      animation: pulse-ring 2s infinite;
       z-index: -1;
     }
 
-    @keyframes sonar {
-      0% { transform: scale(1); opacity: 0.8; }
-      100% { transform: scale(1.12); opacity: 0; }
+    @keyframes pulse-ring {
+      0% { transform: scale(1); opacity: 0.6; }
+      100% { transform: scale(1.15); opacity: 0; }
     }
 
-    /* Hero Section */
+    /* --- HERO SECTION --- */
     .hero {
-      background: var(--bg-hero);
-      padding: 60px 0;
-      text-align: left;
+      /* Uses dvh for mobile browser bar compatibility */
+      min-height: 90vh;
+      min-height: 90dvh; 
+      display: flex;
+      align-items: center;
+      text-align: center;
+      background: radial-gradient(circle at top center, #1a1a1a 0%, var(--bg-dark) 60%);
+      padding: 100px 0 60px 0;
+      position: relative;
     }
 
     .hero h1 {
-      font-size: clamp(2rem, 8vw, 4rem);
-      font-weight: 900;
+      /* Responsive Clamp: Min 2.5rem, Preferred 8vw, Max 4.5rem */
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      line-height: 1.1;
       margin-bottom: 24px;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
+      background: linear-gradient(180deg, #fff 20%, #cce0ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .float-box {
-      background: #fff;
-      padding: 16px 20px;
-      border-radius: 14px;
-      margin-bottom: 12px;
-      max-width: 680px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-      opacity: 0;
-      transform: translateY(20px);
-      animation: rise 0.6s ease forwards;
+    .hero-sub {
+      font-size: clamp(1rem, 4vw, 1.25rem);
+      max-width: 600px;
+      margin: 0 auto 40px auto;
     }
 
-    .float-box:nth-of-type(1){animation-delay:0.1s}
-    .float-box:nth-of-type(2){animation-delay:0.2s}
-    .float-box:nth-of-type(3){animation-delay:0.3s}
+    .tag-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
 
-    @keyframes rise { to { transform: translateY(0); opacity: 1; } }
+    .tag {
+      background: rgba(30, 107, 255, 0.1);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      backdrop-filter: blur(5px);
+      font-weight: 600;
+    }
 
-    /* Sections */
-    section { padding: 60px 0; }
+    /* --- SECTIONS GENERIC --- */
+    section { padding: var(--section-padding) 0; }
 
     .section-title { 
-        font-size: clamp(1.8rem, 5vw, 2.5rem); 
-        font-weight: 800; 
-        margin-bottom: 30px; 
-        letter-spacing: -0.02em;
+      font-size: clamp(2rem, 5vw, 3rem); 
+      text-align: center;
+      margin-bottom: 50px;
     }
 
-    .grid {
+    /* --- SMART GRID (Auto-responsive) --- */
+    .grid-3 {
       display: grid;
+      /* Auto-fit creates as many columns as fit, wrapping when smaller than 280px */
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+      gap: 24px;
     }
 
     .card {
-      background: #fff;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+      background: var(--bg-card);
+      padding: 35px;
+      border-radius: var(--radius-card);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
     }
 
-    .card h3 { margin-bottom: 10px; font-size: 1.25rem; }
+    .card:hover { transform: translateY(-5px); border-color: var(--accent); }
+    .card h3 { color: var(--accent); margin-bottom: 12px; font-size: 1.4rem; }
 
-    .math { 
-        margin-top: 30px; 
-        padding: 20px; 
-        background: rgba(30, 107, 255, 0.05); 
-        border-radius: 12px; 
-        font-weight: 600;
-        display: inline-block;
+    /* --- RESPONSIVE 3D CAROUSEL --- */
+    .carousel-section {
+        text-align: center;
+        overflow: hidden; 
     }
 
-    /* Pricing Section */
-    .pricing {
-      background: #fff;
-      border-radius: 28px;
-      padding: 40px 24px;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.08);
-      max-width: 650px;
-      margin: 0 auto;
+    .carousel-container {
+        position: relative;
+        width: 100%;
+        max-width: 800px;
+        /* Responsive height: Taller on desktop, aspect ratio on mobile */
+        height: 450px; 
+        margin: 0 auto 30px auto;
+        perspective: 1500px; 
+    }
+
+    .demo-card {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 24px;
+        overflow: hidden;
+        background: #1a1a1a;
+        border: 1px solid rgba(255,255,255,0.1);
+        backface-visibility: hidden;
+        transform-style: preserve-3d;
+        transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.6s ease;
+        opacity: 0;
+        transform: rotateY(90deg) scale(0.8);
+        pointer-events: none;
+    }
+
+    /* New Link Style to ensure clickable area */
+    .demo-card a {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .demo-card.active {
+        opacity: 1;
+        transform: rotateY(0deg) scale(1);
+        pointer-events: auto;
+        z-index: 2;
+    }
+
+    /* Animation States */
+    .demo-card.flip-out-left { transform: rotateY(-120deg) scale(0.8); opacity: 0; }
+    .demo-card.flip-out-right { transform: rotateY(120deg) scale(0.8); opacity: 0; }
+
+    .demo-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.5;
+        transition: opacity 0.3s;
+    }
+    
+    .demo-info {
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        padding: 30px;
+        background: linear-gradient(to top, #000 10%, transparent);
+        text-align: left;
+    }
+
+    /* Carousel Controls */
+    .carousel-controls {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        padding-bottom: 10px;
+    }
+    
+    .nav-btn {
+        background: transparent;
+        border: 2px solid var(--accent);
+        color: var(--accent);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex; align-items: center; justify-content: center;
+        /* Ensure easy tapping */
+        touch-action: manipulation;
+    }
+    .nav-btn:hover, .nav-btn:active { background: var(--accent); color: #fff; }
+
+    /* --- PRICING --- */
+    .pricing-simple {
       text-align: center;
+      background: linear-gradient(180deg, rgba(30, 107, 255, 0.05) 0%, rgba(0,0,0,0) 100%);
+      padding: 60px 30px;
+      border-radius: 30px;
+      border: 1px solid rgba(30, 107, 255, 0.1);
+      max-width: 800px;
+      margin: 0 auto;
     }
 
-    .price { font-size: 3.5rem; font-weight: 800; color: var(--accent); margin: 10px 0; }
+    .pricing-simple h3 { font-size: 2rem; color: #fff; }
+    .pricing-sub { font-size: 1.1rem; opacity: 0.8; max-width: 500px; margin: 0 auto 30px auto; }
 
-    ul { list-style: none; margin: 24px 0; text-align: left; max-width: 380px; margin-left: auto; margin-right: auto; }
-    ul li { margin-bottom: 12px; padding-left: 28px; position: relative; font-size: 1rem; }
-    ul li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: 800; }
-
-    /* Final CTA Section */
-    .final-cta { text-align: center; max-width: 640px; margin: 0 auto; }
-
-    /* Modal Styling */
+    /* --- MODAL (Responsive) --- */
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
       justify-content: center;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s ease;
-      z-index: 200;
-      padding: 15px;
+      z-index: 999;
+      padding: 15px; /* Margin from screen edges on mobile */
     }
 
     .modal.open { opacity: 1; pointer-events: auto; }
 
     .modal-content {
-      background: #fff;
+      background: #181818;
       width: 100%;
       max-width: 440px;
       border-radius: 24px;
-      padding: 35px 25px;
+      padding: 40px 30px;
       position: relative;
+      border: 1px solid rgba(255,255,255,0.1);
       transform: translateY(20px);
       transition: transform 0.3s ease;
+      text-align: center;
+      max-height: 90vh;
+      overflow-y: auto; /* Scroll if keyboard covers content */
     }
 
     .modal.open .modal-content { transform: translateY(0); }
@@ -214,189 +334,316 @@
       position: absolute;
       top: 15px;
       right: 15px;
-      background: #f0f0f0;
+      background: transparent;
       border: none;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      font-size: 1.2rem;
+      color: #fff;
+      font-size: 2rem;
+      line-height: 1;
+      padding: 5px;
       cursor: pointer;
     }
 
     .modal-content input {
       width: 100%;
       padding: 16px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       border-radius: 12px;
-      border: 1px solid #ddd;
-      font-size: 1rem;
+      border: 1px solid #333;
+      background: #0a0a0a;
+      color: #fff;
+      font-size: 16px; /* Vital: Prevents iOS from zooming in on focus */
+      font-family: var(--font-body);
+      -webkit-appearance: none; /* Removes iOS default styles */
     }
 
-    /* FIX 4: Smoother Reveal Animation */
+    .modal-content input:focus { outline: none; border-color: var(--accent); }
+
+    /* --- ANIMATIONS --- */
     .reveal {
       opacity: 0;
-      transform: translateY(15px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-      will-change: transform, opacity;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
     }
-
     .reveal.show { opacity: 1; transform: translateY(0); }
 
-    /* Mobile Adjustments */
-    @media (max-width: 600px) {
-      .btn { width: 100%; }
-      .nav .btn { width: auto; padding: 10px 18px; font-size: 0.85rem; }
-      .hero { text-align: center; padding: 50px 0; }
-      .hero h1 { text-align: center; }
-      .float-box { font-size: 0.95rem; margin-left: auto; margin-right: auto; }
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      font-size: 0.85rem;
+      opacity: 0.4;
+      border-top: 1px solid #222;
+      margin-top: 40px;
+    }
+
+    /* --- MEDIA QUERIES --- */
+
+    /* Tablets (Portrait) & Smaller Laptops */
+    @media (max-width: 1024px) {
+      :root { --section-padding: 60px; }
+      .container { width: 92%; }
+      .carousel-container { height: 400px; }
+    }
+
+    /* Mobile Devices */
+    @media (max-width: 768px) {
+      :root { --section-padding: 50px; }
+      
+      .hero { 
+        padding-top: 60px; 
+        align-items: center; /* Ensure centered vertically */
+      }
+      
+      .hero h1 { margin-bottom: 16px; }
+      
+      .grid-3 {
+        grid-template-columns: 1fr; /* Stack cards vertically */
+        gap: 20px;
+      }
+      
+      .carousel-container {
+        height: 380px; /* Taller relative to width on mobile */
+      }
+      
+      .demo-info { padding: 20px; }
+      .demo-info h3 { font-size: 1.25rem; }
+      
+      .pricing-simple { padding: 40px 20px; }
+      .pricing-simple h3 { font-size: 1.5rem; }
+      
+      /* Ensure modal doesn't stick to edges */
+      .modal-content { padding: 30px 20px; }
+    }
+
+    /* Small Mobile (iPhone SE, Foldable cover screens) */
+    @media (max-width: 380px) {
+      .hero h1 { font-size: 2.2rem; }
+      .btn { padding: 14px 28px; width: 100%; }
+      .carousel-container { height: 320px; }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <div class="container nav">
-    <div class="logo">ULECH</div>
-    <a href="#pricing" class="btn sonar" style="background: var(--accent); padding: 8px 16px; font-size: 0.8rem;">Get Started</a>
-  </div>
-</header>
-
 <section class="hero reveal">
   <div class="container">
+    <div class="tag-container">
+      <span class="tag">More Clients</span>
+      <span class="tag">Brand Identity</span>
+      <span class="tag">Ownership</span>
+    </div>
     <h1>Turn Traffic Into Clients While You Train.</h1>
-    <div class="float-box">Stop Losing Fitness Leads to Boring Link‑in‑Bios.</div>
-    <div class="float-box">Your Site, Your Brand, Your Identity.</div>
-    <div class="float-box">High-Converting Page With an AI Agent.</div>
-
-    <div style="margin-top:30px;">
-        <a href="#pricing" class="btn sonar">Secure My Beta Spot ($300)</a>
-        <p style="margin-top:14px;font-size:0.8rem;opacity:0.7;">Only 5 spots left for Jan rush.</p>
-    </div>
+    <p class="hero-sub">We replace your Link-in-Bio with a high-converting coaching page that qualifies leads and books a call serious buyers automatically.</p>
+    <button class="btn pulse trigger-modal">Replace My Bio Link</button>
   </div>
 </section>
 
 <section class="reveal">
   <div class="container">
-    <h2 class="section-title">Built for Coaches tired of chasing leads.</h2>
-    <div class="grid">
-      <div class="card reveal">
+    <h2 class="section-title">Clear First Impression</h2>
+    <div class="grid-3">
+      <div class="card">
         <h3>Professional Authority</h3>
-        <p>A landing page designed to distinguish you from the average trainer.</p>
+        <p>Your visitor immediately understands who you help, what you sell, and why you’re worth paying — without DM’ing you.</p>
       </div>
-      <div class="card reveal">
+      <div class="card">
         <h3>Lead Qualification</h3>
-        <p>Filters out tire-kickers and sends only high-intent clients to your inbox.</p>
+        <p>Smart forms filter out tire-kickers, sending only high-intent, ready-to-buy clients to your inbox.</p>
       </div>
-      <div class="card reveal">
+      <div class="card">
         <h3>24/7 Response</h3>
-        <p>Your AI agent captures leads the second they land on your page.</p>
+        <p>Your custom AI agent captures leads the second they land, answering questions while you sleep.</p>
       </div>
     </div>
-    <p class="math">Just one extra client pays for this system 5× over.</p>
   </div>
 </section>
 
-<section id="pricing" class="reveal">
+<section class="reveal carousel-section">
   <div class="container">
-    <div class="pricing">
-      <h2>Simple & Transparent.</h2>
-      <div class="price">$300 <span style="font-size:1.1rem;font-weight:400;color:#666;">(Setup)</span></div>
-      <p style="margin-bottom:5px; font-weight:800;">$100/month Infrastructure Fee</p>
-      <p style="font-size:0.8rem; opacity:0.6; margin-bottom: 20px;">Covers tokens, hosting, and logic updates.</p>
-      <p style="font-weight:600; color: #d00;">Price increases after 5 Coaches</p>
-      <ul>
-        <li>Custom Conversion Landing Page</li>
-        <li>Custom AI Sales Agent</li>
-        <li>Forms and Calendly Integrations</li>
-        <li>Full Hosting & Setup</li>
-        <li>AI Infrastructure & Tokens</li>
-        <li>Delivered within 24 hours</li>
-      </ul>
-      <a href="#pricing" class="btn sonar">Claim My Beta Spot ($300)</a>
+    <h2 class="section-title">Live Examples</h2>
+    <p style="text-align: center; margin-bottom: 40px;">Browse recent custom builds.</p>
+    
+    <div class="carousel-container">
+        <div class="demo-card active">
+            <a href="https://ulech-ai.github.io/Premium/" target="_blank">
+                <img src="images/premium.jpg" alt="Demo 1">
+                <div class="demo-info">
+                    <h3>The Coach for Entrepreneur</h3>
+                    <p>For established coaches whose clients expect a premium service.</p>
+                </div>
+            </a>
+        </div>
+        <div class="demo-card">
+            <a href="https://ulech-ai.github.io/Apex/" target="_blank">
+                <img src="images/Apex.jpg" alt="Demo 2">
+                <div class="demo-info">
+                    <h3>The Niche Specific Coach</h3>
+                    <p>Direct response funnel for specific courses.</p>
+                </div>
+            </a>
+        </div>
+        <div class="demo-card">
+            <a href="https://ulech-ai.github.io/Wellness/" target="_blank">
+                <img src="images/wellness.png" alt="Demo 3">
+                <div class="demo-info">
+                    <h3>The Wellness Coach</h3>
+                    <p>For coaches who help in building a healthy and mindful lifestyle.</p>
+                </div>
+            </a>
+        </div>
     </div>
+
+    <div class="carousel-controls">
+        <button class="nav-btn" id="prevBtn" aria-label="Previous Demo">&#8249;</button>
+        <button class="nav-btn" id="nextBtn" aria-label="Next Demo">&#8250;</button>
+    </div>
+
   </div>
 </section>
+
 
 <section class="reveal">
-  <div class="container final-cta">
-    <h2 class="section-title" style="margin: 0 auto 20px;">Ready to automate your sales?</h2>
-    <p style="margin-bottom: 40px; font-size: 1.1rem; color: #444;">Don’t let traffic die in a Link Graveyard. Lock in your conversion system today.</p>
-    <a href="#pricing" class="btn sonar">Claim My Beta Spot ($300)</a>
+  <div class="container final-cta" style="text-align: center; padding-bottom: 60px;">
+    <h2>You’re Already Doing the Hard Part.</h2>
+    <p>You post content.
+You get clicks.
+You answer DMs.
+
+This makes sure those clicks stop going to waste.</p>
+    <button class="btn pulse trigger-modal">Build My Coaching Page</button>
   </div>
 </section>
 
 <footer>
-  <div class="container" style="text-align: center; padding: 40px 0; font-size: 0.85rem; color: #777;">
-    <p>© 2024 ULECH.AI</p>
-    <p style="margin-top:10px;"><a href="https://ig.me/m/ulech.ai" style="color:var(--accent); text-decoration:none;">DM us on Instagram</a></p>
+  <div class="container">
+    <p>© 2026 ULECH -- Built for fitness coaches who are tired of losing sales after the bio click.</p>
+    <a href="https://ig.me/m/ulech.ai" style="color:var(--accent); text-decoration:none;">DM us on Instagram</a>
   </div>
 </footer>
 
 <div id="betaModal" class="modal">
   <div class="modal-content">
     <button class="modal-close" aria-label="Close">×</button>
+    
     <div id="formState">
-      <h3 style="margin-bottom: 5px;">Claim Your Beta Spot</h3>
-      <p style="margin-bottom:20px; color: #666; font-size: 0.9rem;">We’ll reach out to start your build.</p>
+      <h3>Replace Your Bio Link</h3>
+      <p>If you’re an online fitness coach selling real results, this is built for you.
+We only work with a limited number of coaches at a time.</p>
       <form id="betaForm">
         <input type="hidden" name="access_key" value="cfae8e9b-027f-4251-9169-c080be9af99f">
+        
         <input type="text" name="name" placeholder="Your Name" required />
         <input type="email" name="email" placeholder="Your Email" required />
         <input type="text" name="ig_handle" placeholder="Instagram (@...)" required />
-        <button type="submit" class="btn" style="width:100%; margin-top: 10px;">Submit</button>
+        
+        <button type="submit" class="btn" style="width:100%; margin-top: 10px;">Submit Application</button>
       </form>
     </div>
-    <div id="thanksState" style="display:none; text-align:center;">
-      <h3 style="font-size: 1.5rem;">You're In 🎉</h3>
-      <p style="margin: 15px 0;">We’ll reach out within 3 hours.</p>
-      <a href="https://ig.me/m/ulech.ai" class="btn" style="background:#000;">Or DM us "BETA" now</a>
+
+    <div id="thanksState" style="display:none;">
+      <h3>You're In 🎉</h3>
+      <p>We have received your details. Expect a DM shortly.</p>
+      <a href="https://ig.me/m/ulech.ai" class="btn" style="background:#fff; color:#000;">Or DM us "PAGE" now</a>
     </div>
   </div>
 </div>
 
 <script>
-  const modal = document.getElementById('betaModal');
-  const openBtns = document.querySelectorAll('.btn.sonar');
-  const closeBtn = document.querySelector('.modal-close');
-  const form = document.getElementById('betaForm');
+  document.addEventListener("DOMContentLoaded", () => {
+    
+    /* --- MODAL LOGIC --- */
+    const modal = document.getElementById('betaModal');
+    const openBtns = document.querySelectorAll('.trigger-modal');
+    const closeBtn = document.querySelector('.modal-close');
+    const form = document.getElementById('betaForm');
 
-  openBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
+    openBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        });
     });
+
+    const closeModal = () => {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerText;
+        submitBtn.innerText = "Sending...";
+        
+        const formData = new FormData(form);
+        const object = Object.fromEntries(formData);
+        try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(object)
+        });
+        if (response.status === 200) {
+            document.getElementById('formState').style.display = 'none';
+            document.getElementById('thanksState').style.display = 'block';
+        }
+        } catch (err) { 
+            alert('Something went wrong. Please try again.');
+            submitBtn.innerText = originalText;
+        }
+    });
+
+    /* --- FLIPPING CAROUSEL LOGIC --- */
+    const cards = document.querySelectorAll('.demo-card');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let currentIndex = 0;
+    let isAnimating = false;
+
+    function moveCarousel(direction) {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        const currentCard = cards[currentIndex];
+        let nextIndex = (currentIndex + direction + cards.length) % cards.length;
+        const nextCard = cards[nextIndex];
+
+        // Determine flip direction
+        const flipClass = direction > 0 ? 'flip-out-left' : 'flip-out-right';
+        currentCard.classList.add(flipClass);
+
+        // Wait for exit animation
+        setTimeout(() => {
+            currentCard.classList.remove('active', 'flip-out-left', 'flip-out-right');
+            
+            // Animate in next card
+            nextCard.classList.add('active');
+            currentIndex = nextIndex;
+
+            setTimeout(() => {
+                isAnimating = false;
+            }, 600);
+        }, 500);
+    }
+
+    nextBtn.addEventListener('click', () => moveCarousel(1));
+    prevBtn.addEventListener('click', () => moveCarousel(-1));
+
+    /* --- SCROLL REVEAL OBSERVER --- */
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { 
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   });
-
-  const closeModal = () => {
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  closeBtn.addEventListener('click', closeModal);
-  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const object = Object.fromEntries(formData);
-    try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(object)
-      });
-      if (response.status === 200) {
-        document.getElementById('formState').style.display = 'none';
-        document.getElementById('thanksState').style.display = 'block';
-      }
-    } catch (err) { alert('Something went wrong. Please try again.'); }
-  });
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('show'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 
 </body>
